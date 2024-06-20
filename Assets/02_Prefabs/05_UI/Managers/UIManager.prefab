@@ -45,3 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuUI: {fileID: 8878891080315325877, guid: ff064621c92f41a4cbb221321ed76284, type: 3}
+  optionsUI: {fileID: 3323846333665522402, guid: 594abf0113781ee4a939d11c3826ce03, type: 3}
+  systemUI: {fileID: 6089967156955740918, guid: 0d9471a833a9bbf44b07d13203a1ec70, type: 3}
+  systemText: {fileID: 0}

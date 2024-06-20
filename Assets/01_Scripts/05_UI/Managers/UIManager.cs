@@ -1,3 +1,6 @@
+using System.Collections;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -27,12 +30,15 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject menuUI;
     [SerializeField] private GameObject optionsUI;
+    [SerializeField] private GameObject systemUI;
+    [SerializeField] private TextMeshProUGUI systemText;
 
     public bool isContinue { get; private set; } = true;
 
     private void Start()
     {
         canvas = GameObject.Find("Canvas");
+        systemText = systemUI.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public void OnMenuUI()
@@ -68,6 +74,56 @@ public class UIManager : MonoBehaviour
         else
         {
             Destroy(optionsObj);
+        }
+    }
+
+    public IEnumerator OnSystemText(string massage)
+    {
+        systemText.text = massage;
+        systemText.color = Color.white;
+        GameObject systemMassage = null;
+
+        GameObject pastText = GameObject.Find("SystemUI(Clone)");
+        if (canvas == null)
+        {
+            canvas = GameObject.Find("Canvas");
+        }
+        if (pastText != null)
+        {
+            Destroy(pastText);
+        }
+        systemMassage = Instantiate(systemUI, canvas.transform);
+
+        yield return new WaitForSeconds(2);
+
+        if (systemMassage != null )
+        {
+            Destroy(systemMassage);
+        }
+    }
+
+    public IEnumerator OnSystemText(string massage, Color color)
+    {
+        systemText.text = massage;
+        systemText.color = color;
+        GameObject systemMassage = null;
+
+        GameObject pastText = GameObject.Find("SystemUI(Clone)");
+        if (canvas == null)
+        {
+            canvas = GameObject.Find("Canvas");
+        }
+        if (pastText != null)
+        {
+            Destroy(pastText);
+        }
+        systemMassage = Instantiate(systemUI, canvas.transform);
+
+        yield return new WaitForSeconds(2);
+
+        if (systemMassage != null)
+        {
+            Destroy(systemMassage);
         }
     }
 }
