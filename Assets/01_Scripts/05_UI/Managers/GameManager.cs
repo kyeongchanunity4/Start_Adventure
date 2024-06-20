@@ -1,6 +1,4 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -34,6 +32,8 @@ public class GameManager : MonoBehaviour
 
     public GameState state { get; private set; } = GameState.Main;
 
+    public int curScore;
+
     public void SetState(GameState gameState)
     {
         state = gameState;
@@ -55,5 +55,18 @@ public class GameManager : MonoBehaviour
     public void OnStageBoss()
     {
         SetState(GameState.Boss);
+    }
+
+    public int GetHighScore()
+    {
+        return curScore;
+    }
+
+    public void TestScore()
+    {
+        for (int i = 0; i < DataManager.Instance.Load().highScores.Count; i++)
+        {
+            Debug.Log(DataManager.Instance.Load().highScores[i]);
+        }
     }
 }
