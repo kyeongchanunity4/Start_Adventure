@@ -1,4 +1,15 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public enum GameState
+{
+    Main,
+    Stage1,
+    Stage2,
+    Stage3,
+    Boss,
+    Claer
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -19,4 +30,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+
 }

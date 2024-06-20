@@ -23,8 +23,10 @@ public class UIManager : MonoBehaviour
     private GameObject canvas;
 
     private GameObject menuObj = null;
+    private GameObject optionsObj = null;
 
     [SerializeField] private GameObject menuUI;
+    [SerializeField] private GameObject optionsUI;
 
     public bool isContinue { get; private set; } = true;
 
@@ -50,6 +52,22 @@ public class UIManager : MonoBehaviour
             Destroy (menuObj);
             isContinue = true;
             Time.timeScale = 1.0f;
+        }
+    }
+
+    public void OnOptionsUI()
+    {
+        if (optionsObj == null)
+        {
+            if (canvas == null)
+            {
+                canvas = GameObject.Find("Canvas");
+            }
+            optionsObj = Instantiate(optionsUI, canvas.transform);
+        }
+        else
+        {
+            Destroy(optionsObj);
         }
     }
 }
