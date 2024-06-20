@@ -14,6 +14,7 @@ public class Buttons : MonoBehaviour
 
     public void LoadStartScene()
     {
+        GameManager.Instance.SetState(GameState.Main);
         SceneManager.LoadScene(0);
     }
 }

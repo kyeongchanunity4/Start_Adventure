@@ -31,5 +31,28 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public GameState state { get; private set; } = GameState.Main;
 
+    public void SetState(GameState gameState)
+    {
+        state = gameState;
+    }
+
+    // 나중에 로드씬 추가하기
+    public void OnStage1()
+    {
+        SetState(GameState.Stage1);
+    }
+    public void OnStage2()
+    {
+        SetState(GameState.Stage2);
+    }
+    public void OnStage3()
+    {
+        SetState(GameState.Stage3);
+    }
+    public void OnStageBoss()
+    {
+        SetState(GameState.Boss);
+    }
 }
