@@ -18,7 +18,7 @@ public class Slime : Monster
     public float sightRange = 10f;
     public float attackRange = 2f;
     public float fieldOfView = 120f;
-    private Transform player;
+    public LayerMask playerLayerMask;
 
     protected override void Start()
     {
@@ -82,24 +82,27 @@ public class Slime : Monster
 
     private bool CanSeePlayer()
     {
-        Vector3 directionToPlayer = (player.position - transform.position).normalized;
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        Vector3 directionToPlayer = transform.forward;
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, directionToPlayer, sightRange, playerLayerMask);
 
-        if (distanceToPlayer <= sightRange)
+        foreach (RaycastHit hit in hits)
         {
-            float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
-            if (angleToPlayer <= fieldOfView / 2)
+            Vector3 directionToHit = (hit.transform.position - transform.position).normalized;
+            float distanceToHit = Vector3.Distance(transform.position, hit.transform.position);
+
+            if (distanceToHit <= sightRange)
             {
-                if (Physics.Raycast(transform.position, directionToPlayer, out RaycastHit hit, sightRange))
+                float angleToHit = Vector3.Angle(transform.forward, directionToHit);
+                if (angleToHit <= fieldOfView / 2)
                 {
-                    if (hit.transform.CompareTag("Player"))
+                    if ((playerLayerMask & (1 << hit.collider.gameObject.layer)) != 0)
                     {
-                        player = hit.transform;
                         return true;
                     }
                 }
             }
         }
+
         return false;
     }
 
