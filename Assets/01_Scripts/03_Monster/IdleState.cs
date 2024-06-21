@@ -10,7 +10,7 @@ public class IdleState : BaseState
 
     public override void OnStateEnter()
     {
-        animator.SetBool(isIdle, true);
+
     }
 
     public override void OnStateUpdate()
@@ -18,6 +18,6 @@ public class IdleState : BaseState
     }
     public override void OnStateExit()
     {
-        animator.SetBool(isIdle, false);
+
     }
 }

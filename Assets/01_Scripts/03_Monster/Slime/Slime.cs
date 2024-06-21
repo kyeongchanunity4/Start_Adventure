@@ -20,13 +20,13 @@ public class Slime : Monster
     public float fieldOfView = 120f;
     private Transform player;
 
-    private void Start()
+    protected override void Start()
     {
         curState = State.Idle;
         fsm = new FSM(new IdleState(this));
     }
 
-    private void Update()
+    protected override void Update()
     {
         switch (curState)
         {
