@@ -7,8 +7,8 @@ using UnityEngine;
 public class Transition : ScriptableObject
 {
     public Decision decision;
-    public BaseState TrueState;
-    public BaseState FalseState;
+    public BaseStatePre TrueState;
+    public BaseStatePre FalseState;
 
     public void Execute(BaseStateMachine stateMachine)
     {

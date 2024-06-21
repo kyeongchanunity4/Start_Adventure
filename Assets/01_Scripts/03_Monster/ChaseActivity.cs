@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Monster/Activity/Patrol")]
+[CreateAssetMenu(menuName = "Monster/Activity/Chase")]
 public class ChaseActivity : Activity
 {
     GameObject target;     

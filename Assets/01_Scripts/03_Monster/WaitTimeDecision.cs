@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Monster/Decisions/WaitTime")]
 public class WaitTimeDecision : Decision
 {
     public float waitTime = 3f;

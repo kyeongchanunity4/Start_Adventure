@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BaseStateMachine : MonoBehaviour
 {
-    [SerializeField] private BaseState initState;
-    public BaseState currentState { get; set; }
+    [SerializeField] private BaseStatePre initState;
+    public BaseStatePre currentState { get; set; }
     
     private void Awake()
     {
