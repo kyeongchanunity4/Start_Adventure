@@ -11,6 +11,10 @@ public class Buttons : MonoBehaviour
     {
         UIManager.Instance.OnOptionsUI();
     }
+    public void OnRankingBorad()
+    {
+        UIManager.Instance.OnRankingUI();
+    }
 
     public void LoadStartScene()
     {

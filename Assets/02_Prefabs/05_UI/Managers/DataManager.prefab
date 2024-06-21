@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &656897632136589101
+--- !u!1 &6560320312074366151
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3093870689950390797}
-  - component: {fileID: 8692501005831331106}
+  - component: {fileID: 3143931614139746538}
+  - component: {fileID: 6839134225671990681}
   m_Layer: 0
-  m_Name: UIManager
+  m_Name: DataManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3093870689950390797
+--- !u!4 &3143931614139746538
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 656897632136589101}
+  m_GameObject: {fileID: 6560320312074366151}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,20 +32,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8692501005831331106
+--- !u!114 &6839134225671990681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 656897632136589101}
+  m_GameObject: {fileID: 6560320312074366151}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b62d017da008bb419e217583bc6a317, type: 3}
+  m_Script: {fileID: 11500000, guid: 915e24f931b77684b85fb95588768a9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuUI: {fileID: 8878891080315325877, guid: ff064621c92f41a4cbb221321ed76284, type: 3}
-  optionsUI: {fileID: 3323846333665522402, guid: 594abf0113781ee4a939d11c3826ce03, type: 3}
-  systemUI: {fileID: 6089967156955740918, guid: 0d9471a833a9bbf44b07d13203a1ec70, type: 3}
-  rankingBoard: {fileID: 7196088367856476564, guid: 501b6ef64ff7a94459c4a826172604b8, type: 3}
-  systemText: {fileID: 0}

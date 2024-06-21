@@ -64,9 +64,9 @@ public class GameManager : MonoBehaviour
 
     public void TestScore()
     {
-        for (int i = 0; i < DataManager.Instance.Load().highScores.Count; i++)
+        for (int i = 0; i < DataManager.Instance.Load().list.Count; i++)
         {
-            Debug.Log(DataManager.Instance.Load().highScores[i]);
+            Debug.Log($"{DataManager.Instance.Load().list[i].highScore}, {DataManager.Instance.Load().list[i].name}");
         }
     }
 }

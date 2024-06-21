@@ -4,16 +4,22 @@ using System.Collections.Generic;
 public class GameScoreData
 {
     public int highScore;
-    public List<int> highScores = new List<int>();
+    public string name;
 
-    public GameScoreData(int score, List<int> ints)
+    public GameScoreData(int score, string str)
     {
         highScore = score;
-        highScores = ints;
+        name = str;
     }
-    public GameScoreData(int score)
+}
+
+[System.Serializable]
+public class GameScoreDataList
+{
+    public List<GameScoreData> list;
+
+    public GameScoreDataList(List<GameScoreData> data)
     {
-        highScore = score;
-        highScores.Add(highScore);
+        list = data;
     }
 }

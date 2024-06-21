@@ -1,6 +1,5 @@
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -27,13 +26,16 @@ public class UIManager : MonoBehaviour
 
     private GameObject menuObj = null;
     private GameObject optionsObj = null;
+    private GameObject rankingObj = null;
 
     [SerializeField] private GameObject menuUI;
     [SerializeField] private GameObject optionsUI;
     [SerializeField] private GameObject systemUI;
+    [SerializeField] private GameObject rankingBoard;
     [SerializeField] private TextMeshProUGUI systemText;
 
     public bool isContinue { get; private set; } = true;
+    public bool isRankingBoard { get; private set; } = false;
 
     private void Start()
     {
@@ -77,11 +79,29 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void OnRankingUI()
+    {
+        if (rankingObj == null)
+        {
+            if (canvas == null)
+            {
+                canvas = GameObject.Find("Canvas");
+            }
+            rankingObj = Instantiate(rankingBoard, canvas.transform);
+            isRankingBoard = true;
+        }
+        else
+        {
+            Destroy(rankingObj);
+            isRankingBoard = false;
+        }
+    }
+
     public IEnumerator OnSystemText(string massage)
     {
         systemText.text = massage;
         systemText.color = Color.white;
-        GameObject systemMassage = null;
+        GameObject systemMassage;
 
         GameObject pastText = GameObject.Find("SystemUI(Clone)");
         if (canvas == null)
@@ -106,7 +126,7 @@ public class UIManager : MonoBehaviour
     {
         systemText.text = massage;
         systemText.color = color;
-        GameObject systemMassage = null;
+        GameObject systemMassage;
 
         GameObject pastText = GameObject.Find("SystemUI(Clone)");
         if (canvas == null)

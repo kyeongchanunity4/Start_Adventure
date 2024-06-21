@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -21,9 +22,12 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public string SavePath => Application.persistentDataPath + "/saves/";
+    GameScoreDataList highScores;
 
-    public void SaveScoreData(GameScoreData gameData)
+
+    private string SavePath => Application.persistentDataPath + "/saves/";
+
+    private void SaveScoreData(GameScoreDataList gameData)
     {
         string saveFilePath = SavePath + "GameData" + ".json";
 
@@ -38,7 +42,7 @@ public class DataManager : MonoBehaviour
 
         Debug.Log("Save Success: " + saveFilePath);
     }
-    public GameScoreData Load()
+    public GameScoreDataList Load()
     {
         string saveFilePath = SavePath + "GameData" + ".json";
 
@@ -49,46 +53,48 @@ public class DataManager : MonoBehaviour
         }
 
         string saveFile = File.ReadAllText(saveFilePath);
-        GameScoreData saveData = JsonUtility.FromJson<GameScoreData>(saveFile);
+        GameScoreDataList saveData = JsonUtility.FromJson<GameScoreDataList>(saveFile);
         return saveData;
     }
 
     public void SaveScore()
-    {
-        GameScoreData saveScore = new GameScoreData(GameManager.Instance.GetHighScore());
+    {        
+        GameScoreData newScore = new GameScoreData(GameManager.Instance.GetHighScore(), "юс╫ц");
 
         if (Load() == null)
         {
-            SaveScoreData(saveScore);
+            highScores.list.Add(newScore);
+
+            SaveScoreData(highScores);
         }
         else
         {
-            GameScoreData newScore = Load();
-            newScore.highScores.Add(GameManager.Instance.GetHighScore());
+            highScores = Load();
+            highScores.list.Add(newScore);
 
-            for (int i = 0; i < newScore.highScores.Count - 1; i++)
+            for (int i = 0; i < highScores.list.Count - 1; i++)
             {
-                for (int j = i + 1; j < newScore.highScores.Count; j++)
+                for (int j = i + 1; j < highScores.list.Count; j++)
                 {
-                    if (newScore.highScores[i] < newScore.highScores[j])
+                    if (highScores.list[i].highScore < highScores.list[j].highScore)
                     {
-                        int temp = newScore.highScores[j];
-                        newScore.highScores[j] = newScore.highScores[i];
-                        newScore.highScores[i] = temp;
+                        int temp = highScores.list[j].highScore;
+                        highScores.list[j].highScore = highScores.list[i].highScore;
+                        highScores.list[i].highScore = temp;
                     }
                 }
             }
-            while (newScore.highScores.Count > 5)
+            while (highScores.list.Count > 5)
             {
-                for (int i = 0; i < newScore.highScores.Count; i++)
+                for (int i = 0; i < highScores.list.Count; i++)
                 {
                     if (i >= 5)
                     {
-                        newScore.highScores.Remove(newScore.highScores[i]);
+                        highScores.list.Remove(highScores.list[i]);
                     }
                 }
             }
-            SaveScoreData(newScore);
+            SaveScoreData(highScores);
         }
     }
 }
