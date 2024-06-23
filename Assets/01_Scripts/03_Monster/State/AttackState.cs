@@ -7,8 +7,9 @@ public class AttackState : BaseState
     private float attackCooldown = 1.0f; 
     private float lastAttackTime;
 
-    public AttackState(Monster monster) : base(monster)
+    public AttackState(Monster monster, float _attackCoolDown) : base(monster)
     {
+        this.attackCooldown = _attackCoolDown;
     }
 
     public override void OnStateEnter()

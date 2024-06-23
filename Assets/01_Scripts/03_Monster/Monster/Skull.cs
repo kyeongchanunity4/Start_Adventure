@@ -53,10 +53,15 @@ public class Skull : Monster
                 fsm.ChangeState(new IdleState(this, idleTime));
                 break;
             case State.Attack:
-                fsm.ChangeState(new AttackState(this));
-                ThrowProjectile();
+                fsm.ChangeState(new AttackState(this, attackTime));
+                //ThrowProjectile();
                 break;
         }
+    }
+
+    public override void Attack()
+    {
+        ThrowProjectile();
     }
 
     private void ThrowProjectile()

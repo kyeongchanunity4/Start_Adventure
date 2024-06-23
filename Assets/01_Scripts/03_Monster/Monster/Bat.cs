@@ -73,7 +73,7 @@ public class Bat : Monster
                 fsm.ChangeState(new MoveState(this, moveSpeed));
                 break;
             case State.Attack:
-                fsm.ChangeState(new AttackState(this));
+                fsm.ChangeState(new AttackState(this, attackTime));
                 break;
         }
     }

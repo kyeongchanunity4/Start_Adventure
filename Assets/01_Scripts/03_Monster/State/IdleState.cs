@@ -22,7 +22,7 @@ public class IdleState : BaseState
         timer += Time.deltaTime;
         if(timer > idleTime)
         {
-            
+            monster.Explore();
         }
     }
     public override void OnStateExit()

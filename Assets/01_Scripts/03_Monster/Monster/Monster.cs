@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    public float health = 100f;
+    protected float maxHealth = 100f;
+    public float currentHealth = 100f;
     public float damage = 10f;
     public float moveSpeed = 3f;
 
     public Transform player;
-    public Rigidbody2D rigid;
+    private Rigidbody2D rigid;
 
     public float idleTime = 2f;
+    public float attackTime = 5f;
 
     public float sightRange = 10f;
     public float attackRange = 2f;
@@ -20,6 +22,7 @@ public class Monster : MonoBehaviour
     protected virtual void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
+        currentHealth = maxHealth;
     }
     protected virtual void Start()
     {
@@ -31,8 +34,8 @@ public class Monster : MonoBehaviour
     }
     public virtual void TakeDamage(float amount)
     {
-        health -= amount;
-        if (health <= 0)
+        currentHealth -= amount;
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -54,6 +57,12 @@ public class Monster : MonoBehaviour
         //    }
         //}
     }
+
+    public virtual void Explore()
+    {
+
+    }
+
     public virtual bool CanSeePlayer()
     {
         return false;
