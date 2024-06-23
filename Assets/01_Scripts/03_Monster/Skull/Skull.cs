@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
-public class Bat : Monster
+public class Skull : Monster
 {
+    [SerializeField] private float dirValue = 30f;
+    [SerializeField] private GameObject projectilePrefab;
+
     private enum State
     {
         Idle,
-        Move,
         Attack,
     }
 
@@ -25,40 +28,20 @@ public class Bat : Monster
         switch (curState)
         {
             case State.Idle:
-                if (CanSeePlayer())
+                if(CanSeePlayer())
                 {
-                    if (CanAttackPlayer())
-                        ChangeState(State.Attack);
-                    else
-                        ChangeState(State.Move);
-                }
-                break;
-            case State.Move:
-                if (CanSeePlayer())
-                {
-                    if (CanAttackPlayer())
-                        ChangeState(State.Attack);
-                }
-                else
-                {
-                    ChangeState(State.Idle);
+                    ChangeState(State.Attack);
                 }
                 break;
             case State.Attack:
-                if (CanSeePlayer())
+                if(!CanSeePlayer())
                 {
-                    if (!CanAttackPlayer())
-                        ChangeState(State.Move);
-                }
-                else
                     ChangeState(State.Idle);
+                }
                 break;
         }
         fsm.UpdateState();
     }
-
-    
-
 
     private void ChangeState(State nextState)
     {
@@ -69,24 +52,38 @@ public class Bat : Monster
             case State.Idle:
                 fsm.ChangeState(new IdleState(this, idleTime));
                 break;
-            case State.Move:
-                fsm.ChangeState(new MoveState(this, moveSpeed));
-                break;
             case State.Attack:
                 fsm.ChangeState(new AttackState(this));
+                ThrowProjectile();
                 break;
         }
     }
 
+    private void ThrowProjectile()
+    {
+        Vector3 direction = (player.transform.position - this.transform.position);
+
+        SpawnProjectile(direction);
+
+        Vector3 leftDirection = Quaternion.Euler(0, -dirValue, 0) * direction;
+        Vector3 rightDirection = Quaternion.Euler(0, dirValue, 0) * direction;
+
+        SpawnProjectile(leftDirection);
+        SpawnProjectile(rightDirection);
+    }
+
+    private void SpawnProjectile(Vector3 direction)
+    {
+        GameObject projectile = Instantiate(projectilePrefab, this.transform.position, Quaternion.identity);
+        projectile.GetComponent<Projectile>().Init(direction);
+    }
+
     public override bool CanSeePlayer()
     {
-        Vector3 directionToPlayer = transform.right;
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, directionToPlayer, sightRange, playerLayerMask);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, sightRange, playerLayerMask);
 
-        foreach (RaycastHit2D hit in hits)
+        foreach (Collider2D hit in hits)
         {
-            Debug.DrawRay(transform.position, directionToPlayer * sightRange, Color.red);
-
             Vector2 directionToHit = (hit.transform.position - transform.position).normalized;
             float distanceToHit = Vector2.Distance(transform.position, hit.transform.position);
 
@@ -95,10 +92,10 @@ public class Bat : Monster
                 float angleToHit = Vector2.Angle(transform.right, directionToHit);
                 if (angleToHit <= fieldOfView / 2)
                 {
-                    if ((playerLayerMask & (1 << hit.collider.gameObject.layer)) != 0)
+                    if ((playerLayerMask & (1 << hit.gameObject.layer)) != 0)
                     {
-                        Debug.DrawLine(transform.position, hit.point, Color.blue);
-                        player = hit.collider.gameObject.transform;
+                        Debug.DrawLine(transform.position, hit.transform.position, Color.blue);
+                        player = hit.gameObject.transform;
                         return true;
                     }
                 }
@@ -106,6 +103,7 @@ public class Bat : Monster
         }
 
         return false;
+
     }
 
 }

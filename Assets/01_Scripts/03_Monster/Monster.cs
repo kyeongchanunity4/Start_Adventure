@@ -17,7 +17,6 @@ public class Monster : MonoBehaviour
     public float attackRange = 2f;
     public float fieldOfView = 120f;
     public LayerMask playerLayerMask;
-    public FSM fsm;
     protected virtual void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -57,31 +56,6 @@ public class Monster : MonoBehaviour
     }
     public virtual bool CanSeePlayer()
     {
-        Vector3 directionToPlayer = transform.right;
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, directionToPlayer, sightRange, playerLayerMask);
-
-        foreach (RaycastHit2D hit in hits)
-        {
-            Debug.DrawRay(transform.position, directionToPlayer * sightRange, Color.red);
-
-            Vector2 directionToHit = (hit.transform.position - transform.position).normalized;
-            float distanceToHit = Vector2.Distance(transform.position, hit.transform.position);
-
-            if (distanceToHit <= sightRange)
-            {
-                float angleToHit = Vector2.Angle(transform.right, directionToHit);
-                if (angleToHit <= fieldOfView / 2)
-                {
-                    if ((playerLayerMask & (1 << hit.collider.gameObject.layer)) != 0)
-                    {
-                        Debug.DrawLine(transform.position, hit.point, Color.blue);
-                        player = hit.collider.gameObject.transform;
-                        return true;
-                    }
-                }
-            }
-        }
-
         return false;
     }
 
@@ -92,4 +66,6 @@ public class Monster : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         return distanceToPlayer <= attackRange;
     }
+
+
 }
