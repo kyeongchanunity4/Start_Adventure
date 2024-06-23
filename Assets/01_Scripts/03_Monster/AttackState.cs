@@ -14,8 +14,11 @@ public class AttackState : BaseState
     public override void OnStateEnter()
     {
         animator.SetTrigger(isAttack);
+        //animator.SetBool(isAttack, true);
         lastAttackTime = Time.time;
         monster.Attack();
+
+        Debug.Log("Attack Enter!");
     }
 
     public override void OnStateUpdate()
@@ -28,5 +31,6 @@ public class AttackState : BaseState
     }
     public override void OnStateExit()
     {
+        //animator.SetBool(isAttack, false);
     }
 }

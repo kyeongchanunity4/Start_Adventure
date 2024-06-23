@@ -15,15 +15,15 @@ public class Slime : Monster
     private State curState;
     private FSM fsm;
 
-    public float sightRange = 10f;
-    public float attackRange = 2f;
-    public float fieldOfView = 120f;
-    public LayerMask playerLayerMask;
+    //public float sightRange = 10f;
+    //public float attackRange = 2f;
+    //public float fieldOfView = 120f;
+    //public LayerMask playerLayerMask;
 
     protected override void Start()
     {
         curState = State.Idle;
-        fsm = new FSM(new IdleState(this));
+        fsm = new FSM(new IdleState(this, idleTime));
     }
 
     protected override void Update()
@@ -31,7 +31,7 @@ public class Slime : Monster
         switch (curState)
         {
             case State.Idle:
-                if(CanSeePlayer())
+                if (CanSeePlayer())
                 {
                     if (CanAttackPlayer())
                         ChangeState(State.Attack);
@@ -60,15 +60,17 @@ public class Slime : Monster
                     ChangeState(State.Idle);
                 break;
         }
+        fsm.UpdateState();
     }
 
     private void ChangeState(State nextState)
     {
-        curState= nextState;
+        curState = nextState;
+
         switch (curState)
         {
             case State.Idle:
-                fsm.ChangeState(new IdleState(this));
+                fsm.ChangeState(new IdleState(this, idleTime));
                 break;
             case State.Move:
                 fsm.ChangeState(new MoveState(this, moveSpeed));
@@ -77,43 +79,6 @@ public class Slime : Monster
                 fsm.ChangeState(new AttackState(this));
                 break;
         }
+ 
     }
-
-
-    private bool CanSeePlayer()
-    {
-        Vector3 directionToPlayer = transform.forward;
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, directionToPlayer, sightRange, playerLayerMask);
-
-        foreach (RaycastHit hit in hits)
-        {
-            Vector3 directionToHit = (hit.transform.position - transform.position).normalized;
-            float distanceToHit = Vector3.Distance(transform.position, hit.transform.position);
-
-            if (distanceToHit <= sightRange)
-            {
-                float angleToHit = Vector3.Angle(transform.forward, directionToHit);
-                if (angleToHit <= fieldOfView / 2)
-                {
-                    if ((playerLayerMask & (1 << hit.collider.gameObject.layer)) != 0)
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private bool CanAttackPlayer()
-    {
-        if (player == null) return false;
-
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        return distanceToPlayer <= attackRange;
-    }
-
-
-
 }

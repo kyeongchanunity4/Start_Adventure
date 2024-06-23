@@ -4,17 +4,29 @@ using UnityEngine;
 
 public class IdleState : BaseState
 {
-    public IdleState(Monster monster) : base(monster)
+    private float idleTime;
+    private float timer = 0f;
+
+    public IdleState(Monster monster, float _idelTime) : base(monster)
     {
+        this.idleTime = _idelTime;
     }
 
     public override void OnStateEnter()
     {
-
+        timer = 0f; 
     }
 
     public override void OnStateUpdate()
     {
+        timer += Time.deltaTime;
+        if(timer > idleTime)
+        {
+            if(monster is Slime)
+            {
+                //monster.Ch
+            }
+        }
     }
     public override void OnStateExit()
     {

@@ -25,9 +25,6 @@ public class FSM
 
     public void UpdateState()
     {
-        if(curState != null)
-            curState.OnStateUpdate();
+        curState?.OnStateUpdate();
     }
-
-
 }

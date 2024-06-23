@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class BaseState
 {
     public readonly int isIdle = Animator.StringToHash("isIdle");
-    public readonly int isMove = Animator.StringToHash("isMove");
     public readonly int isAttack = Animator.StringToHash("isAttack");
 
 

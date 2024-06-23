@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class MoveState : BaseState
 {
+    public readonly int isMove = Animator.StringToHash("isMove");
+
     private float moveSpeed = 0;
     private Rigidbody2D rigid;
-
     public MoveState(Monster monster, float _moveSpeed) : base(monster)
     {
         this.moveSpeed = _moveSpeed;
