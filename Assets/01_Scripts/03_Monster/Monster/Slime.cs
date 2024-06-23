@@ -38,6 +38,7 @@ public class Slime : Monster
                     else
                         ChangeState(State.Move);
                 }
+                else ChangeState(State.Move);
                 break;
             case State.Move:
                 if (CanSeePlayer())
@@ -45,10 +46,10 @@ public class Slime : Monster
                     if (CanAttackPlayer())
                         ChangeState(State.Attack);
                 }
-                else
-                {
-                    ChangeState(State.Idle);
-                }
+                //else
+                //{
+                //    ChangeState(State.Idle);
+                //}
                 break;
             case State.Attack:
                 if (CanSeePlayer())

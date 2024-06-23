@@ -10,11 +10,13 @@ public abstract class BaseState
 
     protected Monster monster;
     protected Animator animator;
+    protected SpriteRenderer spriteRenderer;
 
     protected BaseState(Monster monster)
     {
         this.monster = monster;
         this.animator = monster.GetComponent<Animator>();
+        this.spriteRenderer = monster.GetComponent<SpriteRenderer>();
     }
 
     public abstract void OnStateEnter();
