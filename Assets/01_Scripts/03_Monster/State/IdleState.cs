@@ -22,10 +22,7 @@ public class IdleState : BaseState
         timer += Time.deltaTime;
         if(timer > idleTime)
         {
-            if(monster is Slime)
-            {
-                //monster.Ch
-            }
+            
         }
     }
     public override void OnStateExit()
