@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,7 @@ public enum GameState
     Stage2,
     Stage3,
     Boss,
+    Over,
     Claer
 }
 
@@ -20,7 +22,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
            Instance = this;
-            DontDestroyOnLoad(gameObject);
+           DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -79,7 +81,13 @@ public class GameManager : MonoBehaviour
     }
     public void GameOver()
     {
+        UIManager.Instance.isContinue = false;
+        state = GameState.Over;
         Time.timeScale = 0f;
+    }
+    public void GameClaer()
+    {
+
     }
 
     public float GetHighScore()
@@ -93,5 +101,10 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log($"{DataManager.Instance.Load().list[i].highScore}, {DataManager.Instance.Load().list[i].name}");
         }
+    }
+
+    private IEnumerator OnClaer()
+    {
+        yield return null;
     }
 }
