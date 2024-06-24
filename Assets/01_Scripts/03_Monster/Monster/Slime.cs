@@ -76,7 +76,6 @@ public class Slime : Monster
 
     public override void Explore(int num)
     {
-
         switch(num)
         {
             case (int)State.Idle:
@@ -100,7 +99,7 @@ public class Slime : Monster
 
             if (distanceToPlayer <= sightRange)
             {
-                Vector2 sightDirection = (transform.localScale.x < 0) ? -transform.right : transform.right;
+                Vector2 sightDirection = spriteRenderer.flipX ? -transform.right : transform.right;
 
                 float angleToPlayer = Vector2.Angle(sightDirection, directionToPlayer);
 
@@ -108,9 +107,14 @@ public class Slime : Monster
                 {
                     RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, sightRange, playerLayerMask);
 
-                    if (hit.collider != null && hit.collider.transform == target)
+                    Debug.DrawRay(transform.position, directionToPlayer * sightRange, Color.red);
+                    if (hit.collider != null)
                     {
                         Debug.DrawLine(transform.position, hit.point, Color.blue);
+                    }
+
+                    if (hit.collider != null && hit.collider.transform == target)
+                    {
                         player = target;
                         return true;
                     }

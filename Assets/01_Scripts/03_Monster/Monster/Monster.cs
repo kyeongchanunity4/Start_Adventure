@@ -12,6 +12,7 @@ public class Monster : MonoBehaviour
     public Transform player;
     protected Rigidbody2D rigid;
     protected Animator anim;
+    protected SpriteRenderer spriteRenderer;
 
     public float idleTime = 2f;
     public float attackTime = 2f;
@@ -24,6 +25,7 @@ public class Monster : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         currentHealth = maxHealth;
     }
     protected virtual void Start()
