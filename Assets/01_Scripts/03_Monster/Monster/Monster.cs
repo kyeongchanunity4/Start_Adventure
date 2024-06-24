@@ -48,6 +48,8 @@ public class Monster : MonoBehaviour
 
     public virtual void Attack()
     {
+
+        Debug.Log("Player Attack");
         //if (player != null)
         //{
         //    Player playerComponent = player.GetComponent<Player>();
@@ -58,7 +60,7 @@ public class Monster : MonoBehaviour
         //}
     }
 
-    public virtual void Explore()
+    public virtual void Explore(int num)
     {
 
     }

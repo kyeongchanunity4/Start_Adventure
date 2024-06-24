@@ -26,12 +26,12 @@ public class AttackState : BaseState
     {
         if(Time.time >= lastAttackTime * attackCooldown)
         {
+            animator.SetTrigger(isAttack);
             lastAttackTime = Time.time;
             monster.Attack();
         }
     }
     public override void OnStateExit()
     {
-        //animator.SetBool(isAttack, false);
     }
 }

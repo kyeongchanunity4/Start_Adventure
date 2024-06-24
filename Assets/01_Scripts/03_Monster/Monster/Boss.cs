@@ -86,9 +86,17 @@ public class Boss : Monster
                 break;
         }
     }
-    public override void Explore()
+    public override void Explore(int num)
     {
-        ChangeState(State.Move);
+        switch (num)
+        {
+            case (int)State.Idle:
+                ChangeState(State.Idle);
+                break;
+            case (int)State.Move:
+                ChangeState(State.Move);
+                break;
+        }
     }
 
     public override void Attack()

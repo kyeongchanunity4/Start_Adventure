@@ -13,19 +13,33 @@ public class MoveState : BaseState
     private bool isMoveRightMove = true;
     private float rayDistance = 1f;
 
+    private float moveDuration = 5f;
+    private float moveTimer = 0f;
+
     private Rigidbody2D rigid;
     public MoveState(Monster monster, float _moveSpeed) : base(monster)
     {
         this.moveSpeed = _moveSpeed;
         this.rigid = monster.GetComponent<Rigidbody2D>();
+        this.moveTimer = moveDuration;
+        this.isMoveRightMove = !spriteRenderer.flipX;
     }
 
     public override void OnStateEnter()
     {
         animator.SetBool(isMove, true);
+        moveTimer = moveDuration;
+
     }
     public override void OnStateUpdate()
     {
+        moveTimer -= Time.deltaTime;
+
+        if(moveTimer <= 0)
+        {
+            monster.Explore(0);
+            return;
+        }
         if (monster.player != null)
         {
             Vector2 direction = (monster.player.position - monster.transform.position).normalized;
@@ -50,6 +64,7 @@ public class MoveState : BaseState
     }
     public override void OnStateExit()
     {
+        Debug.Log("Move OnState Exit");
         animator.SetBool(isMove, false);
         rigid.velocity = Vector2.zero;
     }

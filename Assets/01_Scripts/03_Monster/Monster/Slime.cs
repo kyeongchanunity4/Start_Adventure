@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -14,11 +15,6 @@ public class Slime : Monster
 
     private State curState;
     private FSM fsm;
-
-    //public float sightRange = 10f;
-    //public float attackRange = 2f;
-    //public float fieldOfView = 120f;
-    //public LayerMask playerLayerMask;
 
     protected override void Start()
     {
@@ -38,7 +34,7 @@ public class Slime : Monster
                     else
                         ChangeState(State.Move);
                 }
-                else ChangeState(State.Move);
+                //else ChangeState(State.Move);
                 break;
             case State.Move:
                 if (CanSeePlayer())
@@ -46,10 +42,6 @@ public class Slime : Monster
                     if (CanAttackPlayer())
                         ChangeState(State.Attack);
                 }
-                //else
-                //{
-                //    ChangeState(State.Idle);
-                //}
                 break;
             case State.Attack:
                 if (CanSeePlayer())
@@ -82,9 +74,18 @@ public class Slime : Monster
         }
     }
 
-    public override void Explore()
+    public override void Explore(int num)
     {
-        ChangeState(State.Move);
+
+        switch(num)
+        {
+            case (int)State.Idle:
+                ChangeState(State.Idle);
+                break;
+            case (int)State.Move:
+                ChangeState(State.Move);
+                break;
+        }
     }
 
     public override bool CanSeePlayer()
@@ -113,6 +114,9 @@ public class Slime : Monster
                 }
             }
         }
+
+        if (player != null)
+            player = null;
 
         return false;
     }
