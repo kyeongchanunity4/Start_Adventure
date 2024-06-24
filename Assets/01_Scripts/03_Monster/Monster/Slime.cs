@@ -90,25 +90,28 @@ public class Slime : Monster
 
     public override bool CanSeePlayer()
     {
-        Vector3 directionToPlayer = transform.right;
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, directionToPlayer, sightRange, playerLayerMask);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, sightRange, playerLayerMask);
 
-        foreach (RaycastHit2D hit in hits)
+        foreach (Collider2D collider in colliders)
         {
-            Debug.DrawRay(transform.position, directionToPlayer * sightRange, Color.red);
+            Transform target = collider.transform;
+            Vector2 directionToPlayer = (target.position - transform.position).normalized;
+            float distanceToPlayer = Vector2.Distance(transform.position, target.position);
 
-            Vector2 directionToHit = (hit.transform.position - transform.position).normalized;
-            float distanceToHit = Vector2.Distance(transform.position, hit.transform.position);
-
-            if (distanceToHit <= sightRange)
+            if (distanceToPlayer <= sightRange)
             {
-                float angleToHit = Vector2.Angle(transform.right, directionToHit);
-                if (angleToHit <= fieldOfView / 2)
+                Vector2 sightDirection = (transform.localScale.x < 0) ? -transform.right : transform.right;
+
+                float angleToPlayer = Vector2.Angle(sightDirection, directionToPlayer);
+
+                if (angleToPlayer <= fieldOfView / 2)
                 {
-                    if ((playerLayerMask & (1 << hit.collider.gameObject.layer)) != 0)
+                    RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, sightRange, playerLayerMask);
+
+                    if (hit.collider != null && hit.collider.transform == target)
                     {
                         Debug.DrawLine(transform.position, hit.point, Color.blue);
-                        player = hit.collider.gameObject.transform;
+                        player = target;
                         return true;
                     }
                 }

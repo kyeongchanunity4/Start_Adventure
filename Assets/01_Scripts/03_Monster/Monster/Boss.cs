@@ -174,8 +174,6 @@ public class Boss : Monster
         }
 
         Debug.Log("Boss >> Drop Stone!");
-
-        dropStone = false;
     }
 
     private void UseMeleeAttackSkill()
@@ -236,6 +234,9 @@ public class Boss : Monster
                 }
             }
         }
+
+        if (player != null)
+            player = null;
 
         return false;
 

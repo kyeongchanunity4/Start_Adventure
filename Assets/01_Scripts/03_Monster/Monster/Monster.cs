@@ -10,11 +10,11 @@ public class Monster : MonoBehaviour
     public float moveSpeed = 3f;
 
     public Transform player;
-    private Rigidbody2D rigid;
+    protected Rigidbody2D rigid;
     protected Animator anim;
 
     public float idleTime = 2f;
-    public float attackTime = 5f;
+    public float attackTime = 2f;
 
     public float sightRange = 10f;
     public float attackRange = 2f;

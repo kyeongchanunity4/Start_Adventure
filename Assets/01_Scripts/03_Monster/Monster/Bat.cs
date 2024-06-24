@@ -7,11 +7,12 @@ public class Bat : Monster
     private enum State
     {
         Idle,
-        Move,
+        Fly,
         Attack,
     }
 
-    private State curState;
+
+    [SerializeField] private State curState;
     private FSM fsm;
 
     protected override void Start()
@@ -30,25 +31,21 @@ public class Bat : Monster
                     if (CanAttackPlayer())
                         ChangeState(State.Attack);
                     else
-                        ChangeState(State.Move);
+                        ChangeState(State.Fly);
                 }
                 break;
-            case State.Move:
+            case State.Fly:
                 if (CanSeePlayer())
                 {
                     if (CanAttackPlayer())
                         ChangeState(State.Attack);
-                }
-                else
-                {
-                    ChangeState(State.Idle);
                 }
                 break;
             case State.Attack:
                 if (CanSeePlayer())
                 {
                     if (!CanAttackPlayer())
-                        ChangeState(State.Move);
+                        ChangeState(State.Fly);
                 }
                 else
                     ChangeState(State.Idle);
@@ -56,9 +53,6 @@ public class Bat : Monster
         }
         fsm.UpdateState();
     }
-
-    
-
 
     private void ChangeState(State nextState)
     {
@@ -69,11 +63,25 @@ public class Bat : Monster
             case State.Idle:
                 fsm.ChangeState(new IdleState(this, idleTime));
                 break;
-            case State.Move:
-                fsm.ChangeState(new MoveState(this, moveSpeed));
+            case State.Fly:
+                fsm.ChangeState(new FlyState(this, moveSpeed));
                 break;
             case State.Attack:
                 fsm.ChangeState(new AttackState(this, attackTime));
+                break;
+        }
+    }
+
+    public override void Explore(int num)
+    {
+
+        switch (num)
+        {
+            case (int)State.Idle:
+                ChangeState(State.Idle);
+                break;
+            case (int)State.Fly:
+                ChangeState(State.Fly);
                 break;
         }
     }
@@ -105,7 +113,18 @@ public class Bat : Monster
             }
         }
 
+        if (player != null)
+            player = null;
+
         return false;
+    }
+
+    public override void Attack()
+    {
+        if (player == null) return;
+
+        Vector2 dir = (player.position - transform.position).normalized;
+        rigid.velocity = dir * moveSpeed;
     }
 
 }

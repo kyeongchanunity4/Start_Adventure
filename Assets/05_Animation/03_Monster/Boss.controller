@@ -261,6 +261,9 @@ AnimatorController:
     - serializedVersion: 2
       m_State: {fileID: 0}
       m_Motion: {fileID: 7400000, guid: 2d181707519144540aa45a0a1a2a814a, type: 2}
+    - serializedVersion: 2
+      m_State: {fileID: 8061349071938885317}
+      m_Motion: {fileID: 7400000, guid: a52c65f964a0bf741bcbe88deb6ffe4c, type: 2}
     m_Behaviours: []
     m_BlendingMode: 0
     m_SyncedLayerIndex: 0
@@ -275,7 +278,7 @@ AnimatorController:
     m_Motions:
     - serializedVersion: 2
       m_State: {fileID: -8813866659186479988}
-      m_Motion: {fileID: 7400000, guid: 0469abc1733c2ef47ab4e0f539b8bc64, type: 2}
+      m_Motion: {fileID: 7400000, guid: bc4deb07c03d55046a85a06c05ec0dcd, type: 2}
     - serializedVersion: 2
       m_State: {fileID: 5118151635098980327}
       m_Motion: {fileID: 7400000, guid: abaaa500e915f2348ac75143d62c98c8, type: 2}
@@ -285,6 +288,9 @@ AnimatorController:
     - serializedVersion: 2
       m_State: {fileID: -2005754241446994806}
       m_Motion: {fileID: 7400000, guid: 684a828dd0d645248a53aa2b28ccba69, type: 2}
+    - serializedVersion: 2
+      m_State: {fileID: 8061349071938885317}
+      m_Motion: {fileID: 7400000, guid: 420a34ac5f52c0640882f3198d2364be, type: 2}
     m_Behaviours: []
     m_BlendingMode: 0
     m_SyncedLayerIndex: 0
@@ -350,7 +356,7 @@ AnimatorStateMachine:
     m_Position: {x: 300, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5118151635098980327}
-    m_Position: {x: 550, y: -90, z: 0}
+    m_Position: {x: 560, y: -100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7086340626001284144}
     m_Position: {x: 600, y: 110, z: 0}
