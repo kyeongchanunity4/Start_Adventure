@@ -606,8 +606,8 @@ MonoBehaviour:
   damage: 10
   moveSpeed: 3
   player: {fileID: 0}
-  rigid: {fileID: 0}
   idleTime: 2
+  attackTime: 5
   sightRange: 10
   attackRange: 2
   fieldOfView: 120
@@ -13313,11 +13313,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2640669292407821680, guid: 978849c098495c548b32bbfd8f6f495a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.2290936
+      value: -6.76
       objectReference: {fileID: 0}
     - target: {fileID: 2640669292407821680, guid: 978849c098495c548b32bbfd8f6f495a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.145
+      value: -3.234
       objectReference: {fileID: 0}
     - target: {fileID: 2640669292407821680, guid: 978849c098495c548b32bbfd8f6f495a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -13351,9 +13351,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4726869198628674310, guid: 978849c098495c548b32bbfd8f6f495a, type: 3}
+      propertyPath: m_Size.y
+      value: 0.14457539
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726869198628674310, guid: 978849c098495c548b32bbfd8f6f495a, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.014830574
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726869198628674310, guid: 978849c098495c548b32bbfd8f6f495a, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.08844848
+      objectReference: {fileID: 0}
     - target: {fileID: 6903567550010558992, guid: 978849c098495c548b32bbfd8f6f495a, type: 3}
       propertyPath: m_Name
       value: Slime
+      objectReference: {fileID: 0}
+    - target: {fileID: 7577915209631678045, guid: 978849c098495c548b32bbfd8f6f495a, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

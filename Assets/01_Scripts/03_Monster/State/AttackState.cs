@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttackState : BaseState
 {
-    private float attackCooldown = 1.0f; 
+    private float attackCooldown; 
     private float lastAttackTime;
 
     public AttackState(Monster monster, float _attackCoolDown) : base(monster)
