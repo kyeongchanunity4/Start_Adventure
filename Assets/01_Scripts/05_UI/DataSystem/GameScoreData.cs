@@ -3,10 +3,10 @@ using System.Collections.Generic;
 [System.Serializable]
 public class GameScoreData
 {
-    public int highScore;
+    public float highScore;
     public string name;
 
-    public GameScoreData(int score, string str)
+    public GameScoreData(float score, string str)
     {
         highScore = score;
         name = str;

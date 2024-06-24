@@ -26,7 +26,7 @@ public class RankingBoard : MonoBehaviour
                 nameText.text = rankScore.list[i].name;
                 Instantiate(nameText, nameBoard.transform);
 
-                scoreText.text = rankScore.list[i].highScore.ToString();
+                scoreText.text = rankScore.list[i].highScore.ToString("N2");
                 Instantiate(scoreText, scoreBoard.transform);
             }
         }

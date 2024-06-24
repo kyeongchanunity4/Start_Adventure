@@ -34,7 +34,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject rankingBoard;
     [SerializeField] private TextMeshProUGUI systemText;
 
-    public bool isContinue { get; private set; } = true;
+    public bool isContinue = true;
     public bool isRankingBoard { get; private set; } = false;
 
     private void Start()
