@@ -18,7 +18,13 @@ public class Buttons : MonoBehaviour
 
     public void LoadStartScene()
     {
-        GameManager.Instance.SetState(GameState.Main);
-        SceneManager.LoadScene(0);
+        GameManager.Instance.OnMain();
+    }
+    public void StartGame()
+    {
+        if (!UIManager.Instance.isRankingBoard)
+        {
+            GameManager.Instance.OnStage1();
+        }
     }
 }

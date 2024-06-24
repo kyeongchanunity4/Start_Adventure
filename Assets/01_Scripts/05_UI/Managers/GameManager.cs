@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -31,8 +32,16 @@ public class GameManager : MonoBehaviour
     }
 
     public GameState state { get; private set; } = GameState.Main;
+    public float playTime { get; private set; } = 0;
 
-    public int curScore;
+    private float curScore;
+    private void Update()
+    {
+        if (state != GameState.Main && state != GameState.Claer)
+        {
+            playTime += Time.deltaTime;
+        }
+    }
 
     public void SetState(GameState gameState)
     {
@@ -42,22 +51,38 @@ public class GameManager : MonoBehaviour
     // 나중에 로드씬 추가하기
     public void OnStage1()
     {
+        SceneManager.LoadScene(1);
         SetState(GameState.Stage1);
     }
     public void OnStage2()
     {
+        SceneManager.LoadScene(2);
         SetState(GameState.Stage2);
     }
     public void OnStage3()
     {
+        SceneManager.LoadScene(3);
         SetState(GameState.Stage3);
     }
     public void OnStageBoss()
     {
+        SceneManager.LoadScene(4);
         SetState(GameState.Boss);
     }
+    public void OnMain()
+    {
+        SceneManager.LoadScene(0);
+        SetState(GameState.Main);
+        UIManager.Instance.isContinue = true;
+        playTime = 0f;
+        Time.timeScale = 1f;
+    }
+    public void GameOver()
+    {
+        Time.timeScale = 0f;
+    }
 
-    public int GetHighScore()
+    public float GetHighScore()
     {
         return curScore;
     }

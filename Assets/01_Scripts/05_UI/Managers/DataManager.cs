@@ -78,7 +78,7 @@ public class DataManager : MonoBehaviour
                 {
                     if (highScores.list[i].highScore < highScores.list[j].highScore)
                     {
-                        int temp = highScores.list[j].highScore;
+                        float temp = highScores.list[j].highScore;
                         highScores.list[j].highScore = highScores.list[i].highScore;
                         highScores.list[i].highScore = temp;
                     }
