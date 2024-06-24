@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
 
     private Rigidbody2D rb;
+    public Animator anim;
 
     private bool isJumping;
 
@@ -31,19 +32,29 @@ public class PlayerController : MonoBehaviour
 
         transform.position = new Vector2(x, y);
         // 방향키에 따라 캐릭터 좌우 반전
-        if (Input.GetKeyUp(KeyCode.L))
+        if (Input.GetKey(KeyCode.A))
         {
-            gameObject.transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(1, 1, 1);
+            anim.SetBool("isMove", true);
+            transform.Translate(Vector3.left * Time.deltaTime);
         }
-        if (Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
-            gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(-1, 1, 1);
+            anim.SetBool("isMove", true);
+            transform.Translate(Vector3.right * Time.deltaTime);
+        }
+        else anim.SetBool("isMove", false);
+
+        if (Input.GetKey(KeyCode.K) && !anim.GetCurrentAnimatorStateInfo(0).IsName("attack"))
+        {
+            anim.SetTrigger("isAttack");
         }
     }
 
     private void FixedUpdate()
     {
-        Move();   
+        Move();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -74,6 +85,8 @@ public class PlayerController : MonoBehaviour
         dir.y = rb.velocity.y;
 
         rb.velocity = dir;
+
+        anim.SetBool("isAttack", false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -81,6 +94,15 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.tag == "Ground")
         {
             isJumping = false;
+        }
+    }
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            anim.SetBool("isAttack", true);
+            anim.SetBool("isMove", false);
         }
     }
 }
