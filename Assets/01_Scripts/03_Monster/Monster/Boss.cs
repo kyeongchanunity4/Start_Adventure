@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Boss : Monster
 {
+    public readonly int isTransform = Animator.StringToHash("isTransform");
+
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private GameObject stonePrefab;
     private enum State
@@ -18,9 +20,6 @@ public class Boss : Monster
 
     private bool dropStone = false;
     private bool rangedAttack = false;
-
-    [Header("AnimationController")]
-    public Animator[] animator;
 
     [Header("MeleeAttackValue")]
     [SerializeField] private float pushBackForce = 10f;
@@ -54,10 +53,10 @@ public class Boss : Monster
                     if (CanAttackPlayer())
                         ChangeState(State.Attack);
                 }
-                else
-                {
-                    ChangeState(State.Idle);
-                }
+                //else
+                //{
+                //    ChangeState(State.Idle);
+                //}
                 break;
             case State.Attack:
                 if (CanSeePlayer())
@@ -83,6 +82,10 @@ public class Boss : Monster
                 break;
             case State.Attack:
                 fsm.ChangeState(new AttackState(this, attackTime));
+                ChangeAnim();
+                break;
+            case State.Move:
+                fsm.ChangeState(new MoveState(this, attackTime));
                 break;
         }
     }
@@ -99,6 +102,20 @@ public class Boss : Monster
         }
     }
 
+    private void ChangeAnim()
+    {
+        anim.SetLayerWeight(0, 0);
+        anim.SetLayerWeight(1, 0);
+        anim.SetLayerWeight(2, 0);
+
+        if (currentHealth >= maxHealth * 0.5f)
+            anim.SetLayerWeight(0, 1);
+        else if (currentHealth >= maxHealth * 0.2f)
+            anim.SetLayerWeight(1, 1);
+        else
+            anim.SetLayerWeight(2, 1);
+    }
+
     public override void Attack()
     {
         CheckHealthAndSkill();
@@ -109,10 +126,12 @@ public class Boss : Monster
     {
         if(currentHealth <= maxHealth * 0.5f && !dropStone)
         {
+            anim.SetTrigger(isTransform);
             dropStone = true;
         }
         else if(currentHealth <= maxHealth * 0.2f && !rangedAttack)
         {
+            anim.SetTrigger(isTransform);
             rangedAttack = true;
         }
     }
