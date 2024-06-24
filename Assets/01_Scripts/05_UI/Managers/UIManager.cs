@@ -32,9 +32,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject optionsUI;
     [SerializeField] private GameObject systemUI;
     [SerializeField] private GameObject rankingBoard;
+    [SerializeField] private GameObject gameOverUI;
     [SerializeField] private TextMeshProUGUI systemText;
 
-    public bool isContinue = true;
+    public bool isContinue { get; private set; } = true;
     public bool isRankingBoard { get; private set; } = false;
 
     private void Start()
@@ -43,6 +44,21 @@ public class UIManager : MonoBehaviour
         systemText = systemUI.GetComponentInChildren<TextMeshProUGUI>();
     }
 
+    public void ToggleContinue()
+    {
+        if (GameManager.Instance.state == GameState.Main)
+        {
+            isContinue = true;
+        }
+        else if(isContinue)
+        {
+            isContinue = false;
+        }
+        else
+        {
+            isContinue = true;
+        }
+    }
     public void OnMenuUI()
     {
         if (menuObj == null)
@@ -77,6 +93,14 @@ public class UIManager : MonoBehaviour
         {
             Destroy(optionsObj);
         }
+    }
+    public void OnGameOverUI()
+    {
+        if (canvas == null)
+        {
+            canvas = GameObject.Find("Canvas");
+        }
+        Instantiate(gameOverUI, canvas.transform);
     }
 
     public void OnRankingUI()

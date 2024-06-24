@@ -75,13 +75,14 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
         SetState(GameState.Main);
-        UIManager.Instance.isContinue = true;
+        UIManager.Instance.ToggleContinue();
         playTime = 0f;
         Time.timeScale = 1f;
     }
     public void GameOver()
     {
-        UIManager.Instance.isContinue = false;
+        UIManager.Instance.OnGameOverUI();
+        UIManager.Instance.ToggleContinue();
         state = GameState.Over;
         Time.timeScale = 0f;
     }
