@@ -7307,7 +7307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpForce: 5
+  jumpForce: 7
   anim: {fileID: 994656303}
 --- !u!114 &994656306
 MonoBehaviour:
