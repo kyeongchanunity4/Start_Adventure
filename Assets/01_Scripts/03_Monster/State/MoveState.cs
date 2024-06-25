@@ -17,12 +17,13 @@ public class MoveState : BaseState
     private float moveTimer = 0f;
 
     private Rigidbody2D rigid;
-    public MoveState(Monster monster, float _moveSpeed) : base(monster)
+    public MoveState(Monster monster, float _moveSpeed, float _rayDeistance) : base(monster)
     {
         this.moveSpeed = _moveSpeed;
         this.rigid = monster.GetComponent<Rigidbody2D>();
         this.moveTimer = moveDuration;
         this.isMoveRightMove = !spriteRenderer.flipX;
+        this.rayDistance = _rayDeistance;
     }
 
     public override void OnStateEnter()

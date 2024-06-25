@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
+    public readonly int isHit = Animator.StringToHash("isHit");
+
+
     protected float maxHealth = 100f;
     public float currentHealth = 100f;
+
     public float damage = 10f;
     public float moveSpeed = 3f;
 
@@ -20,6 +24,9 @@ public class Monster : MonoBehaviour
     public float sightRange = 10f;
     public float attackRange = 2f;
     public float fieldOfView = 120f;
+
+    public float rayDistance = 1f;
+
     public LayerMask playerLayerMask;
     protected virtual void Awake()
     {
@@ -38,11 +45,13 @@ public class Monster : MonoBehaviour
     }
     public virtual void TakeDamage(float amount)
     {
-        currentHealth -= amount;
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
+        anim.SetTrigger(isHit);
+
+        //currentHealth -= amount;
+        //if (currentHealth <= 0)
+        //{
+        //    Die();
+        //}
     }
 
     protected virtual void Die()

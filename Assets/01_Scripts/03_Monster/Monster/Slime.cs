@@ -66,7 +66,7 @@ public class Slime : Monster
                 fsm.ChangeState(new IdleState(this, idleTime));
                 break;
             case State.Move:
-                fsm.ChangeState(new MoveState(this, moveSpeed));
+                fsm.ChangeState(new MoveState(this, moveSpeed, rayDistance));
                 break;
             case State.Attack:
                 fsm.ChangeState(new AttackState(this, attackTime));

@@ -21,6 +21,9 @@ public class Boss : Monster
     private bool dropStone = false;
     private bool rangedAttack = false;
 
+    private bool hasPlayerMiddle = false;
+    private bool hasPlayerLow = false;
+
     [Header("MeleeAttackValue")]
     [SerializeField] private float pushBackForce = 10f;
     [SerializeField] private float pushBackDistance = 5f;
@@ -85,7 +88,7 @@ public class Boss : Monster
                 ChangeAnim();
                 break;
             case State.Move:
-                fsm.ChangeState(new MoveState(this, attackTime));
+                fsm.ChangeState(new MoveState(this, attackTime, rayDistance));
                 break;
         }
     }
@@ -126,13 +129,23 @@ public class Boss : Monster
     {
         if(currentHealth <= maxHealth * 0.5f && !dropStone)
         {
-            anim.SetTrigger(isTransform);
+            if(!hasPlayerMiddle)
+            {
+                anim.SetTrigger(isTransform);
+                hasPlayerMiddle = true;
+            }
+            
             dropStone = true;
         }
         else if(currentHealth <= maxHealth * 0.2f && !rangedAttack)
         {
-            anim.SetTrigger(isTransform);
+            if(!hasPlayerLow)
+            {
+                anim.SetTrigger(isTransform);
+                hasPlayerLow = true;
+            }
             rangedAttack = true;
+            dropStone = false;
         }
     }
 
@@ -148,7 +161,9 @@ public class Boss : Monster
         {
             float distancePlayer = Vector3.Distance(transform.position, player.transform.position);
 
-            if (distancePlayer >= 3f)
+            Debug.Log($"distancePlayerToBoss : {distancePlayer}");
+
+            if (distancePlayer >= 2f)
             {
                 ThrowProjectile();
             }
@@ -163,7 +178,7 @@ public class Boss : Monster
 
     private void UseDropStone()
     {
-        float randomCount = Random.Range(1, 5);         
+        int randomCount = Random.Range(1, 5);         
         float height = minValue.y;
 
         for(int i = 0; i < randomCount; i++)
@@ -172,8 +187,6 @@ public class Boss : Monster
             Vector3 spawnPos = new Vector3(randomX, height, 0);
             Instantiate(stonePrefab, spawnPos, Quaternion.identity);
         }
-
-        Debug.Log("Boss >> Drop Stone!");
     }
 
     private void UseMeleeAttackSkill()
@@ -217,12 +230,13 @@ public class Boss : Monster
 
         foreach (Collider2D hit in hits)
         {
+            Vector2 sightDirection = spriteRenderer.flipX ? -transform.right : transform.right;
             Vector2 directionToHit = (hit.transform.position - transform.position).normalized;
             float distanceToHit = Vector2.Distance(transform.position, hit.transform.position);
 
             if (distanceToHit <= sightRange)
             {
-                float angleToHit = Vector2.Angle(transform.right, directionToHit);
+                float angleToHit = Vector2.Angle(sightDirection, directionToHit);
                 if (angleToHit <= fieldOfView / 2)
                 {
                     if ((playerLayerMask & (1 << hit.gameObject.layer)) != 0)
