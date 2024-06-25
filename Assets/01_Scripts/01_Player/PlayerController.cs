@@ -22,13 +22,35 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Start()
-    {
- 
-    }
-
     private void Update()
     {
+        // Fix YH
+        float x = transform.position.x;
+        float y = transform.position.y;
+        transform.position = new Vector2(x, y);
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            anim.SetBool("isMove", true);
+            transform.Translate(Vector3.left * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+            anim.SetBool("isMove", true);
+            transform.Translate(Vector3.right * Time.deltaTime);
+        }
+        else
+        {
+            anim.SetBool("isMove", false);
+        }
+        if (Input.GetKey(KeyCode.K) && !anim.GetCurrentAnimatorStateInfo(0).IsName("attack"))
+        {
+            anim.SetTrigger("isAttack");
+        }
+
+
+        /*
         float x = transform.position.x;
         float y = transform.position.y;
 
@@ -49,7 +71,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.K) && !anim.GetCurrentAnimatorStateInfo(0).IsName("attack"))
         {
             anim.SetTrigger("isAttack");
-        }
+        }*/
     }
 
     private void FixedUpdate()
