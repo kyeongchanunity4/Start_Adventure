@@ -10,7 +10,6 @@ public class CameraController : MonoBehaviour
 
     [SerializeField]
     Vector2 center;
-
     [SerializeField]
     Vector2 mapSize;
 
@@ -35,11 +34,12 @@ public class CameraController : MonoBehaviour
     void LimitCameraArea()
     {
         transform.position = Vector3.Lerp(transform.position, playerTransform.position + cameraPosition, Time.deltaTime * cameraMoveSpeed);
+
         float lx = mapSize.x - width;
         float clampX = Mathf.Clamp(transform.position.x, -lx + center.x, lx + center.x);
 
-        float ly = mapSize.y - height;
-        float clampY = Mathf.Clamp(transform.position.y, -ly + center.y, ly + center.y);
+        float ly = mapSize.y - width;
+        float clampY = Mathf.Clamp(transform.position.y, -ly + center.y, lx + center.y);
 
         transform.position = new Vector3(clampX, clampY, -10f);
     }
