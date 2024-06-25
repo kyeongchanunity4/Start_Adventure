@@ -57,12 +57,14 @@ public class DataManager : MonoBehaviour
         return saveData;
     }
 
-    public void SaveScore()
+    public void SaveScore(string str)
     {        
-        GameScoreData newScore = new GameScoreData(GameManager.Instance.GetHighScore(), "юс╫ц");
+        GameScoreData newScore = new GameScoreData(GameManager.Instance.GetHighScore(), str);
 
         if (Load() == null)
         {
+            List<GameScoreData> newData = new List<GameScoreData>();
+            highScores = new GameScoreDataList(newData);
             highScores.list.Add(newScore);
 
             SaveScoreData(highScores);
@@ -78,9 +80,9 @@ public class DataManager : MonoBehaviour
                 {
                     if (highScores.list[i].highScore < highScores.list[j].highScore)
                     {
-                        float temp = highScores.list[j].highScore;
-                        highScores.list[j].highScore = highScores.list[i].highScore;
-                        highScores.list[i].highScore = temp;
+                        GameScoreData temp = highScores.list[j];
+                        highScores.list[j] = highScores.list[i];
+                        highScores.list[i] = temp;
                     }
                 }
             }
