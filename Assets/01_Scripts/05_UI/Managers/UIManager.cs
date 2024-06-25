@@ -33,6 +33,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject systemUI;
     [SerializeField] private GameObject rankingBoard;
     [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private GameObject clearUI;
     [SerializeField] private TextMeshProUGUI systemText;
 
     public bool isContinue { get; private set; } = true;
@@ -101,6 +102,14 @@ public class UIManager : MonoBehaviour
             canvas = GameObject.Find("Canvas");
         }
         Instantiate(gameOverUI, canvas.transform);
+    }
+    public void OnClaerUI()
+    {
+        if (canvas == null)
+        {
+            canvas = GameObject.Find("Canvas");
+        }
+        Instantiate(clearUI, canvas.transform);
     }
 
     public void OnRankingUI()

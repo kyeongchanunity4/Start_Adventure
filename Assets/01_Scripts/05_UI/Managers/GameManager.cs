@@ -35,8 +35,8 @@ public class GameManager : MonoBehaviour
 
     public GameState state { get; private set; } = GameState.Main;
     public float playTime { get; private set; } = 0;
+    public int killCount { get; private set; } = 0;
 
-    private float curScore;
     private void Update()
     {
         if (state != GameState.Main && state != GameState.Claer)
@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(0);
         SetState(GameState.Main);
         UIManager.Instance.ToggleContinue();
+        killCount = 0;
         playTime = 0f;
         Time.timeScale = 1f;
     }
@@ -88,12 +89,22 @@ public class GameManager : MonoBehaviour
     }
     public void GameClaer()
     {
-
+        StartCoroutine(OnClaer());
     }
 
     public float GetHighScore()
     {
-        return curScore;
+        float result;
+        float timeScore = playTime / 5;
+
+        if (timeScore == 0f)
+        {
+            timeScore = 1f;
+        }
+
+        result = (5000 + killCount * 500) / timeScore;
+
+        return result;
     }
 
     public void TestScore()
@@ -106,6 +117,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator OnClaer()
     {
-        yield return null;
+        state = GameState.Claer;
+        yield return new WaitForSeconds(3);
+        UIManager.Instance.OnClaerUI();
     }
 }

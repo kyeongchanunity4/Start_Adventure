@@ -49,5 +49,5 @@ MonoBehaviour:
   systemUI: {fileID: 6089967156955740918, guid: 0d9471a833a9bbf44b07d13203a1ec70, type: 3}
   rankingBoard: {fileID: 7196088367856476564, guid: 501b6ef64ff7a94459c4a826172604b8, type: 3}
   gameOverUI: {fileID: 7371717621100767392, guid: 522ae1c40ac98b44b9d7af93cef47f90, type: 3}
+  clearUI: {fileID: 2870211233449032981, guid: 2ef0c14ec3b7cd943bfdcf0e5e014bcf, type: 3}
   systemText: {fileID: 0}
-  isContinue: 1
