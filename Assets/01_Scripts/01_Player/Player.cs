@@ -33,11 +33,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(currentHp == 0)
         {
-            Time.timeScale = 0.0f;
+            GameManager.Instance.GameOver();
         }
     }
 
@@ -72,17 +72,20 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.tag == "NextStage")
         {
-            if (SceneManager.GetActiveScene().name == "01_Stage01")
+            if (GameManager.Instance.state == GameState.Stage1)
             {
-                SceneManager.LoadScene("02_Stage02");
+                GameManager.Instance.SetEnterTime();
+                GameManager.Instance.OnStage2();
             }
-            if (SceneManager.GetActiveScene().name == "02_Stage02")
+            if (GameManager.Instance.state == GameState.Stage2)
             {
-                SceneManager.LoadScene("03_Stage03");
+                GameManager.Instance.SetEnterTime();
+                GameManager.Instance.OnStage3();
             }
-            if (SceneManager.GetActiveScene().name == "03_Stage03")
+            if (GameManager.Instance.state == GameState.Stage3)
             {
-                SceneManager.LoadScene("04_Stage04(Boss)");
+                GameManager.Instance.SetEnterTime();
+                GameManager.Instance.OnStageBoss();
             }
         }
     }
