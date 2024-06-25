@@ -6,19 +6,23 @@ public class Buttons : MonoBehaviour
     public void OnMenuBtn()
     {
         UIManager.Instance.OnMenuUI();
+        SoundManager.Instance.ButtonSoundPlay();
     }
     public void OnOptionsBtn()
     {
         UIManager.Instance.OnOptionsUI();
+        SoundManager.Instance.ButtonSoundPlay();
     }
     public void OnRankingBorad()
     {
         UIManager.Instance.OnRankingUI();
+        SoundManager.Instance.ButtonSoundPlay();
     }
 
     public void LoadStartScene()
     {
         GameManager.Instance.OnMain();
+        SoundManager.Instance.ButtonSoundPlay();
     }
 
     public void RestartStage()
@@ -46,6 +50,8 @@ public class Buttons : MonoBehaviour
                 Time.timeScale = 1.0f;
                 break;                
         }
+        SoundManager.Instance.ButtonSoundPlay();
+
     }
     public void StartGame()
     {
@@ -53,6 +59,7 @@ public class Buttons : MonoBehaviour
         {
             GameManager.Instance.OnStage1();
             GameManager.Instance.SetEnterTime();
+            SoundManager.Instance.ButtonSoundPlay();
         }
     }
 }
