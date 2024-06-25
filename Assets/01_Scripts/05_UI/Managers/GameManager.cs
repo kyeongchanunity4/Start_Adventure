@@ -35,7 +35,10 @@ public class GameManager : MonoBehaviour
 
     public GameState state { get; private set; } = GameState.Main;
     public float playTime { get; private set; } = 0;
+    public float stageEnterTime {  get; private set; }
     public int killCount { get; private set; } = 0;
+    public int stageEnterCount { get; private set; }
+
 
     private void Update()
     {
@@ -49,26 +52,43 @@ public class GameManager : MonoBehaviour
     {
         state = gameState;
     }
-
-    // 나중에 로드씬 추가하기
+    
+    public void SetEnterTime()
+    {
+        stageEnterTime = playTime;
+        stageEnterCount = killCount;
+    }
+    public void GetEnterTime()
+    {
+        playTime = stageEnterTime;
+        killCount = stageEnterCount;
+    }
+    public void KillMob()
+    {
+        killCount++;
+    }
     public void OnStage1()
     {
         SceneManager.LoadScene(1);
+        GetEnterTime();
         SetState(GameState.Stage1);
     }
     public void OnStage2()
     {
         SceneManager.LoadScene(2);
+        GetEnterTime();
         SetState(GameState.Stage2);
     }
     public void OnStage3()
     {
         SceneManager.LoadScene(3);
+        GetEnterTime();
         SetState(GameState.Stage3);
     }
     public void OnStageBoss()
     {
         SceneManager.LoadScene(4);
+        GetEnterTime();
         SetState(GameState.Boss);
     }
     public void OnMain()
@@ -78,6 +98,8 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.ToggleContinue();
         killCount = 0;
         playTime = 0f;
+        stageEnterCount = 0;
+        stageEnterTime = 0f;
         Time.timeScale = 1f;
     }
     public void GameOver()
