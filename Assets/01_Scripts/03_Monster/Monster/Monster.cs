@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Monster : MonoBehaviour
@@ -7,10 +8,9 @@ public class Monster : MonoBehaviour
     public readonly int isHit = Animator.StringToHash("isHit");
 
 
-    protected float maxHealth = 100f;
-    public float currentHealth = 100f;
+    [SerializeField] protected int maxHealth = 3;
+    public int currentHealth = 3;
 
-    public float damage = 10f;
     public float moveSpeed = 3f;
 
     public Transform player;
@@ -43,15 +43,16 @@ public class Monster : MonoBehaviour
     {
         
     }
-    public virtual void TakeDamage(float amount)
+    public virtual void TakeDamage()
     {
         anim.SetTrigger(isHit);
 
-        //currentHealth -= amount;
-        //if (currentHealth <= 0)
-        //{
-        //    Die();
-        //}
+        currentHealth --;
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            Die();
+        }
     }
 
     protected virtual void Die()
@@ -61,14 +62,12 @@ public class Monster : MonoBehaviour
 
     public virtual void Attack()
     {
-
-        Debug.Log("Player Attack");
         //if (player != null)
         //{
         //    Player playerComponent = player.GetComponent<Player>();
         //    if (playerComponent != null)
         //    {
-        //        playerComponent.TakeDamage(damage);
+        //        playerComponent.DecreaseHP();
         //    }
         //}
     }
@@ -91,5 +90,9 @@ public class Monster : MonoBehaviour
         return distanceToPlayer <= attackRange;
     }
 
+    public virtual void OnCollisionEnter2D(Collision2D other)
+    {
+
+    }
 
 }

@@ -34,6 +34,7 @@ public class MoveState : BaseState
     }
     public override void OnStateUpdate()
     {
+        /*
         moveTimer -= Time.deltaTime;
 
         if(moveTimer <= 0)
@@ -41,6 +42,7 @@ public class MoveState : BaseState
             monster.Explore(0);
             return;
         }
+
         if (monster.player != null)
         {
             Vector2 direction = (monster.player.position - monster.transform.position).normalized;
@@ -53,14 +55,64 @@ public class MoveState : BaseState
             Vector2 direction = isMoveRightMove ? Vector2.right : Vector2.left;
             rigid.velocity = direction * moveSpeed;
 
-            RaycastHit2D hit = Physics2D.Raycast(monster.transform.position, direction, rayDistance, LayerMask.GetMask("Ground"));
-
+            RaycastHit2D hitFront = Physics2D.Raycast(monster.transform.position, direction, rayDistance, LayerMask.GetMask("Ground"));
             Debug.DrawRay(monster.transform.position, direction * rayDistance, Color.red);
-            if (hit.collider != null)
+
+            bool monsterCheck = monster is Slime;
+            RaycastHit2D hitDown = new RaycastHit2D();
+            if (monsterCheck)
+            {
+                Vector2 dirDown = Vector2.down;
+                hitDown = Physics2D.Raycast((Vector2)monster.transform.position + direction * rayDistance, dirDown, rayDistance, LayerMask.GetMask("Ground"));
+                Debug.DrawRay(monster.transform.position, dirDown * rayDistance, Color.yellow);
+            }
+            
+            if (hitFront.collider != null || (monsterCheck && hitDown.collider == null))
             {
                 isMoveRightMove = !isMoveRightMove;
                 spriteRenderer.flipX = !spriteRenderer.flipX;
             }
+        }*/
+
+        moveTimer -= Time.deltaTime;
+
+        if (moveTimer <= 0)
+        {
+            monster.Explore(0);
+            return;
+        }
+
+        Vector2 direction;
+
+        if (monster.player != null)
+        {
+            direction = (monster.player.position - monster.transform.position).normalized;
+            rigid.velocity = direction * moveSpeed;
+
+            spriteRenderer.flipX = direction.x < 0;
+        }
+        else
+        {
+            direction = isMoveRightMove ? Vector2.right : Vector2.left;
+            rigid.velocity = direction * moveSpeed;
+        }
+
+        RaycastHit2D hitFront = Physics2D.Raycast(monster.transform.position, direction, rayDistance, LayerMask.GetMask("Ground"));
+        Debug.DrawRay(monster.transform.position, direction * rayDistance, Color.red);
+
+        bool monsterCheck = monster is Slime;
+        RaycastHit2D hitDown = new RaycastHit2D();
+        if (monsterCheck)
+        {
+            Vector2 dirDown = Vector2.down;
+            hitDown = Physics2D.Raycast((Vector2)monster.transform.position + direction * rayDistance, dirDown, rayDistance, LayerMask.GetMask("Ground"));
+            Debug.DrawRay((Vector2)monster.transform.position + direction * rayDistance, dirDown * rayDistance, Color.yellow);
+        }
+
+        if (hitFront.collider != null || (monsterCheck && hitDown.collider == null))
+        {
+            isMoveRightMove = !isMoveRightMove;
+            spriteRenderer.flipX = !spriteRenderer.flipX;
         }
     }
     public override void OnStateExit()

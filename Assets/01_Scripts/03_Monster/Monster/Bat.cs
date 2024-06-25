@@ -121,10 +121,25 @@ public class Bat : Monster
 
     public override void Attack()
     {
+        base.Attack();
+
         if (player == null) return;
 
         Vector2 dir = (player.position - transform.position).normalized;
         rigid.velocity = dir * moveSpeed;
     }
+
+    public override void OnCollisionEnter2D(Collision2D other)
+    {
+        if (curState == State.Attack && other.gameObject.CompareTag("Player"))
+        {
+            Player playerComponent = player.GetComponent<Player>();
+            if (playerComponent != null)
+            {
+                playerComponent.DecreaseHP();
+            }
+        }
+    }
+
 
 }

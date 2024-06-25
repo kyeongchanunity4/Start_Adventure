@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Slime : Monster
@@ -127,4 +125,17 @@ public class Slime : Monster
 
         return false;
     }
+
+    public override void OnCollisionEnter2D(Collision2D other)
+    {
+        if(curState == State.Attack && other.gameObject.CompareTag("Player"))
+        {
+            Player playerComponent = player.GetComponent<Player>();
+            if (playerComponent != null)
+            {
+                playerComponent.DecreaseHP();
+            }
+        }
+    }
+
 }

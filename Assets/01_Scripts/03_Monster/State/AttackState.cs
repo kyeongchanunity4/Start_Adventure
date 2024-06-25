@@ -26,8 +26,6 @@ public class AttackState : BaseState
     {
         if(Time.time >= lastAttackTime + attackCooldown)
         {
-            Debug.Log("Attack Update!");
-
             animator.SetTrigger(isAttack);
             lastAttackTime = Time.time;
             monster.Attack();

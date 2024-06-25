@@ -13,15 +13,19 @@ public class Projectile : MonoBehaviour
     {
         this.direction = dir.normalized;
     }
-
     private void Update()
     {
         transform.Translate(direction * speed * Time.deltaTime, Space.World);
     }
-    private void OnCollisionEnter2D(Collision2D other)
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (((1 << other.gameObject.layer) & layer) != 0)
         {
+            if(other.TryGetComponent<Player>(out Player player))
+            {
+                player.DecreaseHP();
+            }
             Destroy(gameObject);
         }
     }

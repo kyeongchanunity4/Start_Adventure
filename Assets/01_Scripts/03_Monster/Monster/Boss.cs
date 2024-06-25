@@ -25,7 +25,7 @@ public class Boss : Monster
     private bool hasPlayerLow = false;
 
     [Header("MeleeAttackValue")]
-    [SerializeField] private float pushBackForce = 10f;
+    [SerializeField] private float pushBackForce = 500f;
     [SerializeField] private float pushBackDistance = 5f;
 
     [Header("StoneAttackValue")]
@@ -121,6 +121,7 @@ public class Boss : Monster
 
     public override void Attack()
     {
+        base.Attack();
         CheckHealthAndSkill();
         UseSkill();
     }
@@ -196,15 +197,29 @@ public class Boss : Monster
         {
             if ((playerLayerMask & (1<< hit.gameObject.layer)) != 0)
             {
-                Vector3 direction = (hit.transform.position - transform.position).normalized;
-                hit.GetComponent<Rigidbody2D>().AddForce(direction * pushBackForce, ForceMode2D.Impulse);
+                Rigidbody2D rb = hit.GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    Vector2 direction = (hit.transform.position - transform.position).normalized;
 
-                Vector3 pushBackPosition = transform.position + direction * pushBackDistance;
-                hit.transform.position = pushBackPosition;
+                    rb.velocity = Vector2.zero;
+                    rb.AddForce(direction * pushBackForce, ForceMode2D.Impulse);
+
+                    Debug.Log($"Direction : {direction * pushBackForce}");
+
+                    Debug.Log("Boss > MeleeAttack!");
+                }
+
+                //Vector3 direction = (hit.transform.position - transform.position).normalized;
+                //hit.GetComponent<Rigidbody2D>().AddForce(direction * pushBackForce, ForceMode2D.Impulse);
+
+                //Vector3 pushBackPosition = transform.position + direction * pushBackDistance;
+                //hit.transform.position = pushBackPosition;
+
             }
         }
 
-        Debug.Log("Boss > MeleeAttack!");
+       
     }
 
     private void ThrowProjectile()
