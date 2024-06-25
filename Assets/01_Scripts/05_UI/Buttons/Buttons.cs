@@ -51,7 +51,7 @@ public class Buttons : MonoBehaviour
                 break;                
         }
         SoundManager.Instance.ButtonSoundPlay();
-
+ 
     }
     public void StartGame()
     {
