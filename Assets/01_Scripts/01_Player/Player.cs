@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -57,6 +58,32 @@ public class Player : MonoBehaviour
             GameObject hpImage = Instantiate (hpImagePrefab, hpContainer);
             hpImages.Insert(currentHp, hpImage);
             currentHp++;
+        }
+    }
+
+    //구멍에 빠지면 게임 오버
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //구멍에 빠지면 게임 오버
+        if (collision.gameObject.tag == "DropZone")
+        {
+            currentHp = 0;
+        }
+
+        if (collision.gameObject.tag == "NextStage")
+        {
+            if (SceneManager.GetActiveScene().name == "01_Stage01")
+            {
+                SceneManager.LoadScene("02_Stage02");
+            }
+            if (SceneManager.GetActiveScene().name == "02_Stage02")
+            {
+                SceneManager.LoadScene("03_Stage03");
+            }
+            if (SceneManager.GetActiveScene().name == "03_Stage03")
+            {
+                SceneManager.LoadScene("04_Stage04(Boss)");
+            }
         }
     }
 }

@@ -36,15 +36,13 @@ public class PlayerController : MonoBehaviour
         // 방향키에 따라 캐릭터 좌우 반전
         if (Input.GetKey(KeyCode.A))
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(0.8f, 0.8f, 1);
             anim.SetBool("isMove", true);
-            transform.Translate(Vector3.left * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(-0.8f, 0.8f, 1);
             anim.SetBool("isMove", true);
-            transform.Translate(Vector3.right * Time.deltaTime);
         }
         else anim.SetBool("isMove", false);
 
