@@ -4,24 +4,35 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
+    public readonly int isHit = Animator.StringToHash("isHit");
+
+
     protected float maxHealth = 100f;
     public float currentHealth = 100f;
+
     public float damage = 10f;
     public float moveSpeed = 3f;
 
     public Transform player;
-    private Rigidbody2D rigid;
+    protected Rigidbody2D rigid;
+    protected Animator anim;
+    protected SpriteRenderer spriteRenderer;
 
     public float idleTime = 2f;
-    public float attackTime = 5f;
+    public float attackTime = 2f;
 
     public float sightRange = 10f;
     public float attackRange = 2f;
     public float fieldOfView = 120f;
+
+    public float rayDistance = 1f;
+
     public LayerMask playerLayerMask;
     protected virtual void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         currentHealth = maxHealth;
     }
     protected virtual void Start()
@@ -34,11 +45,13 @@ public class Monster : MonoBehaviour
     }
     public virtual void TakeDamage(float amount)
     {
-        currentHealth -= amount;
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
+        anim.SetTrigger(isHit);
+
+        //currentHealth -= amount;
+        //if (currentHealth <= 0)
+        //{
+        //    Die();
+        //}
     }
 
     protected virtual void Die()
@@ -48,6 +61,8 @@ public class Monster : MonoBehaviour
 
     public virtual void Attack()
     {
+
+        Debug.Log("Player Attack");
         //if (player != null)
         //{
         //    Player playerComponent = player.GetComponent<Player>();
@@ -58,7 +73,7 @@ public class Monster : MonoBehaviour
         //}
     }
 
-    public virtual void Explore()
+    public virtual void Explore(int num)
     {
 
     }

@@ -19,19 +19,21 @@ public class AttackState : BaseState
         lastAttackTime = Time.time;
         monster.Attack();
 
-        Debug.Log("Attack Enter!");
+        
     }
 
     public override void OnStateUpdate()
     {
-        if(Time.time >= lastAttackTime * attackCooldown)
+        if(Time.time >= lastAttackTime + attackCooldown)
         {
+            Debug.Log("Attack Update!");
+
+            animator.SetTrigger(isAttack);
             lastAttackTime = Time.time;
             monster.Attack();
         }
     }
     public override void OnStateExit()
     {
-        //animator.SetBool(isAttack, false);
     }
 }

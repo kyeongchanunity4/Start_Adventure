@@ -1,42 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
-public class MoveState : BaseState
+public class FlyState : BaseState
 {
     public readonly int isMove = Animator.StringToHash("isMove");
 
     private float moveSpeed = 0;
     private bool isMoveRightMove = true;
     private float rayDistance = 1f;
+    public float randomMoveRadius = 5f;
 
     private float moveDuration = 5f;
     private float moveTimer = 0f;
+    private Vector2 randomTargetPosition;
 
     private Rigidbody2D rigid;
-    public MoveState(Monster monster, float _moveSpeed, float _rayDeistance) : base(monster)
+    public FlyState(Monster monster, float _moveSpeed) : base(monster)
     {
         this.moveSpeed = _moveSpeed;
         this.rigid = monster.GetComponent<Rigidbody2D>();
         this.moveTimer = moveDuration;
         this.isMoveRightMove = !spriteRenderer.flipX;
-        this.rayDistance = _rayDeistance;
+        SetRandomTargetPosition();
     }
 
     public override void OnStateEnter()
     {
         animator.SetBool(isMove, true);
         moveTimer = moveDuration;
-
+        
     }
     public override void OnStateUpdate()
     {
         moveTimer -= Time.deltaTime;
 
-        if(moveTimer <= 0)
+        if (moveTimer <= 0)
         {
             monster.Explore(0);
             return;
@@ -50,19 +50,31 @@ public class MoveState : BaseState
         }
         else
         {
-            Vector2 direction = isMoveRightMove ? Vector2.right : Vector2.left;
+            if (Vector2.Distance(monster.transform.position, randomTargetPosition) < 0.1f)
+            {
+                SetRandomTargetPosition();
+            }
+
+            Vector2 direction = (randomTargetPosition - (Vector2)monster.transform.position).normalized;
             rigid.velocity = direction * moveSpeed;
+            spriteRenderer.flipX = direction.x < 0;
 
             RaycastHit2D hit = Physics2D.Raycast(monster.transform.position, direction, rayDistance, LayerMask.GetMask("Ground"));
 
             Debug.DrawRay(monster.transform.position, direction * rayDistance, Color.red);
             if (hit.collider != null)
             {
-                isMoveRightMove = !isMoveRightMove;
-                spriteRenderer.flipX = !spriteRenderer.flipX;
+                SetRandomTargetPosition();
             }
         }
     }
+
+    private void SetRandomTargetPosition()
+    {
+        Vector2 randomDirection = Random.insideUnitCircle.normalized;
+        randomTargetPosition = (Vector2)monster.transform.position + randomDirection * randomMoveRadius;
+    }
+
     public override void OnStateExit()
     {
         Debug.Log("Move OnState Exit");

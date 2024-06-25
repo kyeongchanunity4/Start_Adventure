@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -14,11 +15,6 @@ public class Slime : Monster
 
     private State curState;
     private FSM fsm;
-
-    //public float sightRange = 10f;
-    //public float attackRange = 2f;
-    //public float fieldOfView = 120f;
-    //public LayerMask playerLayerMask;
 
     protected override void Start()
     {
@@ -38,7 +34,7 @@ public class Slime : Monster
                     else
                         ChangeState(State.Move);
                 }
-                else ChangeState(State.Move);
+                //else ChangeState(State.Move);
                 break;
             case State.Move:
                 if (CanSeePlayer())
@@ -46,10 +42,6 @@ public class Slime : Monster
                     if (CanAttackPlayer())
                         ChangeState(State.Attack);
                 }
-                //else
-                //{
-                //    ChangeState(State.Idle);
-                //}
                 break;
             case State.Attack:
                 if (CanSeePlayer())
@@ -74,7 +66,7 @@ public class Slime : Monster
                 fsm.ChangeState(new IdleState(this, idleTime));
                 break;
             case State.Move:
-                fsm.ChangeState(new MoveState(this, moveSpeed));
+                fsm.ChangeState(new MoveState(this, moveSpeed, rayDistance));
                 break;
             case State.Attack:
                 fsm.ChangeState(new AttackState(this, attackTime));
@@ -82,37 +74,56 @@ public class Slime : Monster
         }
     }
 
-    public override void Explore()
+    public override void Explore(int num)
     {
-        ChangeState(State.Move);
+        switch(num)
+        {
+            case (int)State.Idle:
+                ChangeState(State.Idle);
+                break;
+            case (int)State.Move:
+                ChangeState(State.Move);
+                break;
+        }
     }
 
     public override bool CanSeePlayer()
     {
-        Vector3 directionToPlayer = transform.right;
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, directionToPlayer, sightRange, playerLayerMask);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, sightRange, playerLayerMask);
 
-        foreach (RaycastHit2D hit in hits)
+        foreach (Collider2D collider in colliders)
         {
-            Debug.DrawRay(transform.position, directionToPlayer * sightRange, Color.red);
+            Transform target = collider.transform;
+            Vector2 directionToPlayer = (target.position - transform.position).normalized;
+            float distanceToPlayer = Vector2.Distance(transform.position, target.position);
 
-            Vector2 directionToHit = (hit.transform.position - transform.position).normalized;
-            float distanceToHit = Vector2.Distance(transform.position, hit.transform.position);
-
-            if (distanceToHit <= sightRange)
+            if (distanceToPlayer <= sightRange)
             {
-                float angleToHit = Vector2.Angle(transform.right, directionToHit);
-                if (angleToHit <= fieldOfView / 2)
+                Vector2 sightDirection = spriteRenderer.flipX ? -transform.right : transform.right;
+
+                float angleToPlayer = Vector2.Angle(sightDirection, directionToPlayer);
+
+                if (angleToPlayer <= fieldOfView / 2)
                 {
-                    if ((playerLayerMask & (1 << hit.collider.gameObject.layer)) != 0)
+                    RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, sightRange, playerLayerMask);
+
+                    Debug.DrawRay(transform.position, directionToPlayer * sightRange, Color.red);
+                    if (hit.collider != null)
                     {
                         Debug.DrawLine(transform.position, hit.point, Color.blue);
-                        player = hit.collider.gameObject.transform;
+                    }
+
+                    if (hit.collider != null && hit.collider.transform == target)
+                    {
+                        player = target;
                         return true;
                     }
                 }
             }
         }
+
+        if (player != null)
+            player = null;
 
         return false;
     }
