@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isJumping;
 
-    Vector2 jumpObjectPW = new Vector2(0, 17);
+    Vector2 jumpObjectPW = new Vector2(0, 10);
 
     private void Awake()
     {
