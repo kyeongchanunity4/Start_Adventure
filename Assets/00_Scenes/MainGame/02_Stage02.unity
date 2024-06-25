@@ -3253,7 +3253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpForce: 5
+  jumpForce: 7
   anim: {fileID: 1429539516}
 --- !u!114 &1429539519
 MonoBehaviour:
