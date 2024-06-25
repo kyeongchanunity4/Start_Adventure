@@ -63,6 +63,10 @@ public class GameManager : MonoBehaviour
         playTime = stageEnterTime;
         killCount = stageEnterCount;
     }
+    public void KillMob()
+    {
+        killCount++;
+    }
     public void OnStage1()
     {
         SceneManager.LoadScene(1);
