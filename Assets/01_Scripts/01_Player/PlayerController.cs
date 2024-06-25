@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
 
     private bool isJumping;
 
+    Vector2 jumpObjectPW = new Vector2(0, 17);
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -103,6 +105,14 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("isAttack", true);
             anim.SetBool("isMove", false);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("JumpObject"))
+        {
+            rb.AddForce(jumpObjectPW, ForceMode2D.Impulse);
         }
     }
 }
