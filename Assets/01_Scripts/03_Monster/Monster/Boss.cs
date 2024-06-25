@@ -126,6 +126,12 @@ public class Boss : Monster
         UseSkill();
     }
 
+    protected override void Die()
+    {
+        base.Die();
+        GameManager.Instance.GameClaer();
+    }
+
     private void CheckHealthAndSkill()
     {
         if(currentHealth <= maxHealth * 0.5f && !dropStone)

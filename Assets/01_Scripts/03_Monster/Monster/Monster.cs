@@ -57,6 +57,8 @@ public class Monster : MonoBehaviour
 
     protected virtual void Die()
     {
+        GameManager.Instance.KillMob();
+
         Destroy(gameObject);
     }
 
