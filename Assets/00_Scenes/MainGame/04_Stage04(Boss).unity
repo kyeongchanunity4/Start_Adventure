@@ -7434,6 +7434,10 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4022192869343415242, guid: 978fa2fb617654f5eaeff9da6fc7d116, type: 3}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -19696,6 +19700,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 575485633}
     m_Modifications:
+    - target: {fileID: 299800596555834212, guid: ba5db7beffde8a44291604b22701cbe2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5839049600499846430, guid: ba5db7beffde8a44291604b22701cbe2, type: 3}
       propertyPath: m_Name
       value: Timer
