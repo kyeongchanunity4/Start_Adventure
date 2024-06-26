@@ -26,6 +26,7 @@ public class Projectile : MonoBehaviour
             {
                 player.DecreaseHP();
             }
+
             Destroy(gameObject);
         }
     }
