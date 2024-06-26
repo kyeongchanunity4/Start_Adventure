@@ -1,4 +1,4 @@
-# 🎮 C4 -Start_Adventure-
+# 🎮 C6 -Start_Adventure-
 
 ![222](https://github.com/kyeongchanunity4/Start_Adventure/assets/61472555/32875cd5-7ee8-41f3-95d9-d3ce1954635e)
 
@@ -31,6 +31,8 @@ __개발 플랫폼 : Unity, Visual Studio 2022__
   
  __점프:W__
 
+ __공격:K__
+
  <br>
  <br>
  <br>
@@ -42,3 +44,4 @@ __개발 플랫폼 : Unity, Visual Studio 2022__
    * __다양한 몬스터__
    * __클리어 타임 저장__
    * __다양한 맵 구성__
+   * __보스 구현__ 
