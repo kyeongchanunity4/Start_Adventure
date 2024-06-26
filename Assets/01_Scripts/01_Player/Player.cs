@@ -69,24 +69,5 @@ public class Player : MonoBehaviour
         {
             currentHp = 0;
         }
-
-        if (collision.gameObject.tag == "NextStage")
-        {
-            if (GameManager.Instance.state == GameState.Stage1)
-            {
-                GameManager.Instance.SetEnterTime();
-                GameManager.Instance.OnStage2();
-            }
-            if (GameManager.Instance.state == GameState.Stage2)
-            {
-                GameManager.Instance.SetEnterTime();
-                GameManager.Instance.OnStage3();
-            }
-            if (GameManager.Instance.state == GameState.Stage3)
-            {
-                GameManager.Instance.SetEnterTime();
-                GameManager.Instance.OnStageBoss();
-            }
-        }
     }
 }

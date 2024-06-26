@@ -140,7 +140,10 @@ public class GameManager : MonoBehaviour
     private IEnumerator OnClaer()
     {
         state = GameState.Claer;
-        yield return new WaitForSeconds(3);
+        Time.timeScale = 0.5f;
+        yield return new WaitForSeconds(0.5f);
+        Time.timeScale = 1;
+        yield return new WaitForSeconds(1);
         UIManager.Instance.OnClaerUI();
     }
 }
