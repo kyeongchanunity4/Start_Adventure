@@ -3,50 +3,24 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField]
-    Transform playerTransform;
+    Transform player;
 
     [SerializeField]
-    Vector3 cameraPosition;
+    float smoothing = 0.2f;
 
     [SerializeField]
-    Vector2 center;
-    [SerializeField]
-    Vector2 mapSize;
+    Vector2 minCameraBoundary;
 
     [SerializeField]
-    float cameraMoveSpeed;
-    float height;
-    float width;
-
-    void Start()
-    {
-        playerTransform = GameObject.Find("Player").GetComponent<Transform>();
-
-        height = Camera.main.orthographicSize;
-        width = height * Screen.width / Screen.height;
-    }
+    Vector2 maxCameraBoundary;
 
     private void FixedUpdate()
     {
-        LimitCameraArea();
-    }
+        Vector3 targetsPos = new Vector3(player.position.x, player.position.y, this.transform.position.z);
 
-    void LimitCameraArea()
-    {
-        transform.position = Vector3.Lerp(transform.position, playerTransform.position + cameraPosition, Time.deltaTime * cameraMoveSpeed);
+        targetsPos.x = Mathf.Clamp(targetsPos.x, minCameraBoundary.x, maxCameraBoundary.x);
+        targetsPos.y = Mathf.Clamp(targetsPos.y, minCameraBoundary.y, maxCameraBoundary.y);
 
-        float lx = mapSize.x - width;
-        float clampX = Mathf.Clamp(transform.position.x, -lx + center.x, lx + center.x);
-
-        float ly = mapSize.y - width;
-        float clampY = Mathf.Clamp(transform.position.y, -ly + center.y, lx + center.y);
-
-        transform.position = new Vector3(clampX, clampY, -10f);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(center, mapSize * 2);
+        transform.position = Vector3.Lerp(transform.position, targetsPos, smoothing);
     }
 }
