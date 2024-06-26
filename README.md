@@ -1,6 +1,7 @@
-# 🎮 C6 -Start_Adventure-
+# 🎮 C6 -NOVIK_Adventure-
 
-![222](https://github.com/kyeongchanunity4/Start_Adventure/assets/61472555/32875cd5-7ee8-41f3-95d9-d3ce1954635e)
+![333](https://github.com/kyeongchanunity4/Start_Adventure/assets/61472555/2df2a55f-bd32-48ed-9293-e56cfc51fb03)
+
 
 
 
